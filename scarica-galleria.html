@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scarica Galleria</title>
+<style>
+:root{--bg:#f1f2ee;--paper:#fbfbf9;--line:#d9ddd5;--ink:#1a1e1c;--muted:#5d6662;--accent:#2f49c4;--on:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#121415;--paper:#1b1e1f;--line:#2f3436;--ink:#ebeeec;--muted:#9aa39f;--accent:#93a5ff;--on:#10142b;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:0 16px}
+main{max-width:640px;margin:0 auto;padding-block:32px 56px;display:flex;flex-direction:column;gap:20px}
+h1{margin:0;font-size:36px;line-height:1.05;letter-spacing:-.02em}
+p{margin:0}.muted{color:var(--muted)}
+textarea{width:100%;height:120px;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px;resize:vertical}
+button{align-self:flex-start;padding:13px 20px;border-radius:999px;border:0;background:var(--accent);color:var(--on);font:600 16px/1 inherit;cursor:pointer}
+ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px}
+b{font-weight:600}
+</style>
+</head>
+<body>
+<main>
+  <h1>Scarica Galleria</h1>
+  <p class="muted">Codice corto del preferito. Carica il pannello da questo sito, quindi resta sempre aggiornato.</p>
+  <textarea id="code" readonly aria-label="Codice del preferito"></textarea>
+  <button id="copy" type="button">Copia codice</button>
+  <ol>
+    <li>Tocca <b>Copia codice</b>.</li>
+    <li>Salva una pagina qualsiasi nei preferiti, poi modificala: nome <b>Scarica Galleria</b>, nel campo URL incolla il codice.</li>
+    <li>Sulla pagina della galleria tocca la barra degli indirizzi, scrivi <b>Scarica Galleria</b> e tocca il preferito tra i suggerimenti.</li>
+  </ol>
+</main>
+<script>
+var src = 'https://marcoalpedretti-sys.github.io/scarica-galleria.js';
+var code = "javascript:(function(){var s=document.createElement('script');s.src='" + src + "?v='+Date.now();s.onerror=function(){alert('Scarica Galleria: questo sito blocca gli script esterni.')};document.body.appendChild(s)})()";
+var ta = document.getElementById('code'), btn = document.getElementById('copy');
+ta.value = code;
+btn.onclick = function () {
+  var ok = function () { btn.textContent = 'Codice copiato'; setTimeout(function () { btn.textContent = 'Copia codice'; }, 2500); };
+  var fb = function () { ta.focus(); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) { btn.textContent = 'Seleziona e copia il testo'; } };
+  if (navigator.clipboard) navigator.clipboard.writeText(code).then(ok, fb); else fb();
+};
+</script>
+</body>
+</html>
